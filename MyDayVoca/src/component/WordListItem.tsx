@@ -1,12 +1,12 @@
 import React from 'react';
 import { useNavigation } from '@react-navigation/native';
-import {Platform, Pressable, StyleSheet, Text, View} from 'react-native';
+import { Platform, Pressable, StyleSheet, Text } from 'react-native';
 import { format, formatDistanceToNow } from 'date-fns';
 import { ko } from 'date-fns/locale';
 import { Word } from '~/slices/words';
-import { RootStackNavigationProp } from '~/screens/RootStack';
+import { MainTabNavigationProp } from '~/screens/types';
 
-function formatDate(date: Date) {
+function formatDate(date: string) {
     const d = new Date(date);
     const now = Date.now();
     const diff = (now - d.getTime()) / 1000;
@@ -36,10 +36,11 @@ function WordListItem({word}: {word: Word}) {
     const isWordHidden = false;
     const isBodyHidden = false;
 
-    const navigation = useNavigation<RootStackNavigationProp>();
+    const navigation = useNavigation<MainTabNavigationProp>();
     
     const onPress = () => {
         navigation.navigate('Write', {word});
+        //navigation.navigate('Write', {});
     };
 
     return (

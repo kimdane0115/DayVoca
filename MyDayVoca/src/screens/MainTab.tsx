@@ -1,26 +1,11 @@
 import React from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { View, Text } from 'react-native';
-import { BottomTabNavigationProp, createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { CompositeNavigationProp, NavigatorScreenParams, TabActions, useNavigation } from '@react-navigation/native';
-
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import WordListScreen from './WordListScreen';
 import CalendarScreen from './CalendarScreen';
 import SearchScreen from './SearchScreen';
-import { RootStackNavigationProp } from './RootStack';
-
-type MainTabParamList = {
-    WordList: undefined;
-    Calendar: undefined;
-    Search: undefined;
-};
-
-type MainTabNavigationProp = CompositeNavigationProp<
-    RootStackNavigationProp,
-    BottomTabNavigationProp<MainTabParamList>
->;
-
-export type MainTabNavigationScreenParams = NavigatorScreenParams<MainTabParamList>;
+import SearchHeader from '~/component/SearchHeader';
+import { MainTabParamList } from './types';
 
 const Tab = createBottomTabNavigator<MainTabParamList>();
 
@@ -55,7 +40,7 @@ function MainTab() {
                     tabBarIcon: ({color, size}) => (
                         <Icon name="search" size={size} color={color} />
                     ),
-                    //headerTitle: () => <SearchHeader />,
+                    headerTitle: () => <SearchHeader />,
                 }}
             />
         </Tab.Navigator>

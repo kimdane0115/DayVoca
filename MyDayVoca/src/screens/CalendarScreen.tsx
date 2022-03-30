@@ -1,25 +1,38 @@
-import React from "react";
-import {StyleSheet, View, Text} from 'react-native';
-import FloatingWriteButton from "~/component/FloatingWriteButton";
+import { format } from 'date-fns';
+import React, {useMemo, useState} from 'react';
+import CalendarView from '~/component/CalendarView';
+import WordList from '~/component/WordList';
+import useWords from '~/hooks/useWords';
 
 function CalendarScreen() {
+    const words = useWords();
+    const [selectedDate, setSelectedDate] = useState(format(new Date(), 'yyyy-MM-dd'),);
+
+    const markedDates = useMemo(() => words.reduce((acc: any, current) => {
+            const formattedDate = format(new Date(current.date), 'yyyy-MM-dd');
+            acc[formattedDate] = {marked: true};
+
+            //console.log(acc);
+            return acc;
+        }, {}), [words],
+    );
+
+    const filteredWords = words.filter(
+        (word) => format(new Date(word.date), 'yyyy-MM-dd') === selectedDate,
+    );
+
     return (
-        <View style={styles.block}>
-        <View style={styles.hidden_menu}></View>
-        {/* <WordList words={words} /> */}
-        <FloatingWriteButton hidden={false}/>
-    </View>
+        <WordList
+            words={filteredWords}
+            ListHeaderComponent={
+                <CalendarView
+                    markedDates={markedDates}
+                    selectedDate={selectedDate}
+                    onSelectDate={setSelectedDate}
+                />
+            }
+        />
     );
 }
-
-const styles = StyleSheet.create({
-    block: {
-        flex: 1,
-    },
-    hidden_menu: {
-        marginTop: 50,
-        paddingVertical: 0,
-    },
-});
 
 export default CalendarScreen;

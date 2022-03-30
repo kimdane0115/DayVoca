@@ -5,39 +5,37 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import WriteHeader from '~/component/WriteHeader';
 import WriteEditor from '~/component/WriteEditor';
 import {RouteProp, useRoute} from '@react-navigation/core';
-import { RootStackNavigationProp, RootStackParamList} from './RootStack';
+import { RootStackNavigationProp, RootStackParamList} from './types';
 import useWordsActions from '../hooks/useWordsActions';
 
-// import WordContext from '~/contexts/WordContext';
 type WriteScreenRouteProp = RouteProp<RootStackParamList, 'Write'>;
 
 function WriteScreen() {
     const navigation = useNavigation<RootStackNavigationProp>();
     const {params} = useRoute<WriteScreenRouteProp>();
-    
+    const id = params.word?.id ?? '';
     const [wordTitle, setWordTitle] = useState(params.word?.wordTitle ?? '');
     const [wordBody, setWordBody] = useState(params.word?.wordBody ?? '');
-    const [date, setDate] = useState(params.word ? new Date(params.word.date) : new Date());
+    const [date, setDate] = useState(params.word ? new Date(params.word?.date) : new Date());
 
-    const onChangeDate = (selectedDate: Date) => {
-        setDate(selectedDate);
-    }
+    // const onChangeDate = (selectedDate: Date) => {
+    //     setDate(selectedDate);
+    // }
 
-    const onChangeTitle = (title: string) => {
-        setWordTitle(title);
-    }    
+    // const onChangeTitle = (title: string) => {
+    //     setWordTitle(title);
+    // }    
 
-    const onChangeBody = (body: string) => {
-        setWordBody(body);
-    }
-    const {add, toggle, remove} = useWordsActions();
+    // const onChangeBody = (body: string) => {
+    //     setWordBody(body);
+    // }
+
+    const {add, toggle, remove, modify} = useWordsActions();
     const onSave = () => {
-        //todo
         if (params.word) {
-            console.log('modify');
+            modify(id, wordTitle, wordBody, date.toISOString());
         } else {
-            console.log('new');
-            add(wordTitle, wordBody, date);
+            add(wordTitle, wordBody, date.toISOString());
         }
         navigation.pop();
     }
@@ -50,7 +48,8 @@ function WriteScreen() {
                 {
                     text: '삭제',
                     onPress: () => {
-                        
+                        remove(id);
+                        navigation.pop();
                     },
                     style: 'destructive',
                 },
@@ -67,17 +66,17 @@ function WriteScreen() {
                 style={styles.avoidingView}
                 behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
                 <WriteHeader
-                    onSave={onSave}
-                    onAskRemove={onAskRemove}
                     isEditing={!!params.word}
                     date={date}
-                    onChangeDate={onChangeDate}
+                    onSave={onSave}
+                    onAskRemove={onAskRemove}
+                    onChangeDate={setDate}
                 />
                 <WriteEditor
                     wordTitle={wordTitle}
                     wordBody={wordBody}
-                    onChangeTitle={onChangeTitle}
-                    onChangeBody={onChangeBody}
+                    onChangeTitle={setWordTitle}
+                    onChangeBody={setWordBody}
                 />
             </KeyboardAvoidingView>
         </SafeAreaView>

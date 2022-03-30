@@ -3,16 +3,15 @@ import {format} from 'date-fns';
 import {ko} from 'date-fns/locale';
 import React, {useReducer} from 'react';
 import {Pressable, StyleSheet, Text, View} from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
 import TransparentCircleButton from "./TransparentCircleButton";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-import { RootStackNavigationProp } from '~/screens/RootStack';
+import { RootStackNavigationProp } from '~/screens/types';
 
 interface WriteHeaderProps {
-    onSave(): void;
-    onAskRemove(): void;
     isEditing: boolean;
     date: Date;
+    onSave(): void;
+    onAskRemove(): void;
     onChangeDate(date: Date): void;
 }
 
@@ -34,7 +33,7 @@ function reducer(state: any, action: any) {
     }
 }
 
-function WriteHeader({onSave, onAskRemove, isEditing, date, onChangeDate}: WriteHeaderProps) {
+function WriteHeader({isEditing, date, onSave, onAskRemove, onChangeDate}: WriteHeaderProps) {
     // // const navigation = useNavigation();
     
     // const onGoBack = () => {

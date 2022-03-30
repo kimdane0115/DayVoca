@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { useDispatch } from "react-redux";
 import { bindActionCreators } from "redux";
-import { add, remove, toggle } from "~/slices/words";
+import { add, modify, remove, toggle } from "~/slices/words";
 
 export default function useWordsActions() {
     const dispatch = useDispatch();
@@ -11,6 +11,7 @@ export default function useWordsActions() {
         bindActionCreators(
             {
                 add,
+                modify,
                 remove,
                 toggle,
             },

@@ -2,7 +2,7 @@ import { useNavigation } from '@react-navigation/native';
 import React, {useEffect, useRef} from 'react';
 import {Platform, Pressable, StyleSheet, Animated} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { RootStackNavigationProp } from '~/screens/RootStack';
+import { RootStackNavigationProp } from '~/screens/types';
 
 export interface FloatingWriteButtonProps {
     hidden: boolean;

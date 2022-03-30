@@ -9,7 +9,7 @@ interface WriteEditorProps {
 }
 
 function WriteEditor({wordTitle, wordBody, onChangeTitle, onChangeBody}: WriteEditorProps) {
-    //const bodyRef = useRef<undefined>();
+    const bodyRef = useRef<TextInput | null>(null);
     return (
         <View style={styles.block}>
             <TextInput
@@ -18,9 +18,9 @@ function WriteEditor({wordTitle, wordBody, onChangeTitle, onChangeBody}: WriteEd
                 returnKeyType="next"
                 onChangeText={onChangeTitle}
                 value={wordTitle}
-                // onSubmitEditing={() => {
-                //     bodyRef.current.focus();
-                // }}
+                onSubmitEditing={() => {
+                    bodyRef.current?.focus();
+                }}
             />
             <TextInput
                 placeholder="뜻을 입력하세요"
@@ -29,7 +29,7 @@ function WriteEditor({wordTitle, wordBody, onChangeTitle, onChangeBody}: WriteEd
                 textAlignVertical="top"
                 onChangeText={onChangeBody}
                 value={wordBody}
-                //ref={bodyRef}
+                ref={bodyRef}
             />
         </View>
     );

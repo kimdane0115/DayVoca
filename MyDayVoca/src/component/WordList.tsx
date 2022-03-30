@@ -1,9 +1,9 @@
 import React from 'react';
-import { FlatList, StyleSheet, View, Text } from 'react-native';
+import { FlatList, StyleSheet, View } from 'react-native';
 import { Word } from '~/slices/words';
 import WordListItem from './WordListItem';
 
-function WordList({words}: {words: Word[]}) {
+function WordList({words, ListHeaderComponent}: {words: Word[], ListHeaderComponent?: any}) {
     return (
         <FlatList
             data={words}
@@ -11,7 +11,7 @@ function WordList({words}: {words: Word[]}) {
             renderItem={({item}) => <WordListItem word={item} />}
             keyExtractor={(item) => item.id}
             ItemSeparatorComponent={() => <View style={styles.separator} />}
-            //ListHeaderComponent={ListHeaderComponent}
+            ListHeaderComponent={ListHeaderComponent}
         />
     );
 }

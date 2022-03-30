@@ -3,16 +3,17 @@ import { createNativeStackNavigator, NativeStackNavigationProp } from '@react-na
 import { useNavigation, RouteProp, useRoute, StackActions } from '@react-navigation/native';
 import MainTab from './MainTab';
 import WriteScreen from './WriteScreen';
-import { Word } from '~/slices/words';
+//import { Word } from '~/slices/words';
+import { RootStackParamList } from './types';
 
-export type RootStackParamList = {
-    MainTab: undefined;
-    Write: {
-        word?: Word;
-    }
-};
+// export type RootStackParamList = {
+//     MainTab: undefined;
+//     Write: {
+//         word?: Word;
+//     }
+// };
 
-export type RootStackNavigationProp = NativeStackNavigationProp<RootStackParamList>;
+// export type RootStackNavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
