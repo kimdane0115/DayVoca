@@ -1,10 +1,13 @@
 import React from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { Platform, Pressable, StyleSheet, Text } from 'react-native';
+import { Platform, Pressable, StyleSheet, Text, View } from 'react-native';
 import { format, formatDistanceToNow } from 'date-fns';
 import { ko } from 'date-fns/locale';
 import { Word } from '~/slices/words';
 import { MainTabNavigationProp } from '~/screens/types';
+import TransparentCircleButton from './TransparentCircleButton';
+import useWordsActions from '~/hooks/useWordsActions';
+import useHiddens from '~/hooks/useHiddens';
 
 function formatDate(date: string) {
     const d = new Date(date);
@@ -32,9 +35,9 @@ function truncate(text: string) {
 
 function WordListItem({word}: {word: Word}) {
 //function WordListItem(word: Word) {
-    const {wordTitle, wordBody, date} = word;
-    const isWordHidden = false;
-    const isBodyHidden = false;
+    const {id, wordTitle, wordBody, date} = word;
+    const hidden = useHiddens();
+    const { remove } = useWordsActions();
 
     const navigation = useNavigation<MainTabNavigationProp>();
     
@@ -43,30 +46,54 @@ function WordListItem({word}: {word: Word}) {
         //navigation.navigate('Write', {});
     };
 
+    const onItemRemove = () => {
+        remove(id);
+    }
+
     return (
+        <View style={styles.block}>
         <Pressable
             style={({pressed}) => [
-                styles.block,
+                styles.wordWrapper,
                 Platform.OS === 'ios' && pressed && {backgroundColor: '#efefef'},
             ]}
             android_ripple={{color: '#ededed'}}
             onPress={onPress}>
             <Text style={styles.date}>{formatDate(date)}</Text>
-            {!isWordHidden && (
+            {!hidden.wordHidden?.isWordHidden ? (
                 <Text style={styles.title}>{wordTitle}</Text>
+            ) : (
+                <Text style={styles.title}>--</Text>
             )}
-            {!isBodyHidden && (
+            {!hidden.wordHidden?.isBodyHidden ? (
                 <Text style={styles.body}>{truncate(wordBody)}</Text>
+            ) : (
+                <Text style={styles.body}>--</Text>
             )}
         </Pressable>
+        <TransparentCircleButton
+            name="delete-forever"
+            color="#ef5350"
+            hasMarginRight
+            onPress={onItemRemove}
+        />
+        </View>
     );
 }
 
 const styles = StyleSheet.create({
     block: {
+        flex: 1,
+        flexDirection: 'row',
+        alignItems: 'center',
         backgroundColor: 'white',
-        paddingHorizontal: 16,
-        paddingVertical: 24,
+    },
+    wordWrapper: {
+        paddingHorizontal: 10,
+        paddingVertical: 10,
+        flex: 1,
+        justifyContent: "center",
+        //backgroundColor: 'white', 
     },
     date: {
         fontSize: 12,
@@ -75,6 +102,7 @@ const styles = StyleSheet.create({
     },
     title: {
         color: '#263238',
+        //color: '#ffffff',
         fontSize: 18,
         fontWeight: 'bold',
         marginBottom: 8,

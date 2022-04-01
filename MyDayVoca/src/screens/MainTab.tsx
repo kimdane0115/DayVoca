@@ -19,6 +19,7 @@ function MainTab() {
                 name="WordList"
                 component={WordListScreen}
                 options={{
+                    title: "전체 단어",
                     tabBarIcon: ({color, size}) => (
                         <Icon name="view-stream" size={size} color={color} />
                     ),
@@ -28,6 +29,7 @@ function MainTab() {
                 name="Calendar"
                 component={CalendarScreen}
                 options={{
+                    title: "날짜별 단어",
                     tabBarIcon: ({color, size}) => (
                         <Icon name="event" size={size} color={color} />
                     ),

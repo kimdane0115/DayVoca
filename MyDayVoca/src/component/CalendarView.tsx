@@ -17,7 +17,6 @@ function CalendarView({markedDates, selectedDate, onSelectDate}: CalendarViewPro
             marked: markedDates[selectedDate]?.marked,
         },
     };
-    console.log(markedSelectedDate);
 
     return (
         <Calendar

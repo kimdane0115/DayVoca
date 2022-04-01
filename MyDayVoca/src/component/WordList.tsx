@@ -2,9 +2,16 @@ import React from 'react';
 import { FlatList, StyleSheet, View } from 'react-native';
 import { Word } from '~/slices/words';
 import WordListItem from './WordListItem';
+import WordHiddenRadioButton from './WordHiddenRadioButton';
+import useHiddens from '~/hooks/useHiddens';
 
 function WordList({words, ListHeaderComponent}: {words: Word[], ListHeaderComponent?: any}) {
+
+    const hidden = useHiddens();
+
     return (
+        <>
+        <WordHiddenRadioButton radioValue={hidden.wordHidden?.radioState ?? 'first'} />
         <FlatList
             data={words}
             style={styles.block}
@@ -13,6 +20,7 @@ function WordList({words, ListHeaderComponent}: {words: Word[], ListHeaderCompon
             ItemSeparatorComponent={() => <View style={styles.separator} />}
             ListHeaderComponent={ListHeaderComponent}
         />
+        </>
     );
 }
 

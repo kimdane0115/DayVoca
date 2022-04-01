@@ -3,6 +3,7 @@ import React, {useMemo, useState} from 'react';
 import CalendarView from '~/component/CalendarView';
 import WordList from '~/component/WordList';
 import useWords from '~/hooks/useWords';
+import WordHiddenRadioButton from '~/component/WordHiddenRadioButton';
 
 function CalendarScreen() {
     const words = useWords();
@@ -22,6 +23,7 @@ function CalendarScreen() {
     );
 
     return (
+        <>
         <WordList
             words={filteredWords}
             ListHeaderComponent={
@@ -32,6 +34,7 @@ function CalendarScreen() {
                 />
             }
         />
+        </>
     );
 }
 

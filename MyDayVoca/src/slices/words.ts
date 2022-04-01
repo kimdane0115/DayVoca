@@ -33,7 +33,7 @@ const todosSlice = createSlice({
             },
             reducer(state, action: PayloadAction<{
                         id: string; wordTitle: string; wordBody: string; date: string}>) {
-                state.push({
+                state.unshift({
                     ...action.payload,
                     //done: false,
                 });

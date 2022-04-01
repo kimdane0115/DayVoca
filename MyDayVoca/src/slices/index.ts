@@ -1,10 +1,12 @@
 import { combineReducers } from "redux";
 import words from "./words";
+import hidden from "./hidden";
 import {persistStore, persistReducer, PersistConfig} from "redux-persist"
 import AsyncStorage from "@react-native-community/async-storage";
 import { configureStore } from "@reduxjs/toolkit";
 
 const rootReducer = combineReducers({
+    hidden,
     words,
 });
 
